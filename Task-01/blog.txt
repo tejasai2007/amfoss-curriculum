@@ -1,0 +1,37 @@
+EXERCISE 00
+We simply need to write "git start master" to start the first exercise. then "git verify " to verify it.
+EXERCISE 01
+We need to add A.txt or B.txt and commit it respectively
+EXERCISE 02
+First we need to use "git reset" to go a commit back and then do the same process like adding A.txt or B.txt and commit it respectively.
+EXERCISE 03
+We need to ignore specific all files with extension like ".exe" we use "*.exe" and to add a directory we directly write "/<directory-name" in the .ignore file.If we want to ignore a specific file dirctly name the file in .ignore file .we need to create a".ignore" file.Then add "*.exe" ,"*.o","*.jar","/libraries" in the file using nano . Then add and commit as usual.
+EXERCISE 04
+Here we need to point chase-branch and escaped with one commit . so we  use "git merge" to merge the chase-branch and the escaped.
+EXERCISE 05
+Due to some differences in the files named same, these conflicts appear while merging.We need to use git status to know where the conflict is (it will show directly too) and resolve those conflicts.here we need to start the merge.Then the conflict appears in equation.txt here.then nano eqation.txt and remove everything and write the final text there which will be edited in both at the same time. then add and  then use "git merge --continue". 
+EXERCISE 06
+Here we need to save a work which you are doing and do the other  work .then come back to the work before .so we need to use stash here.first we need to use "git stash". then fix bug in bug.txt then add it and commit it .then use "git stash pop" then add the line"Finally, finished it!" in the end in bug.txt. then add and commit it
+EXERCISE 07
+Here we use rebase to add abranch as an ancestor og the present branch.here we need to fix the bug and then rebase to the hot-bugfix
+EXERCISE 08
+Here to remove ".gitignore" file we use rm command. "rm .gitignore"
+EXERCISE 09
+to make a change in file name we use mv. "mv File.txt file.txt"
+EXERCISE 10
+Here we will use nano and edit spelling in the file.txt and add and use git commit --amend to do the change in the previous commit.
+EXERCISE 11
+Here we use git commit --amend --date="date(1987 here)" to forge the date .
+EXERCISE 12
+Here as we know rebase is used to pik and move sequence of commits,  first we use git rebase -i HEAD~5 to let it show the previous commit and then type edirt instead of pick near the spelling mistake.then save and come back. then go to file.txt and correct the sepelling mistake and add it. then use git rebase --continue then a merge conflict will appear then resolve and add it and continue the rebase with the same code.
+EXERCISE 13
+git reflog is used to view all the commits and changes done before all the time. here we use it to get the hash code of the commit we lost and use git reset <hashcode> --soft to stop there .
+EXERCISE 14
+As we already know we can use git reset annd then add them and commit them in sequence.
+EXERCISE 15
+As we used already the git rebase -i HEAD~n we use it here again but there we were editing it but here we use it to merge two commits  i.e. unstead of pick use squash and n=2.
+EXERCISE 16
+First we use chmod +x script.sh to let the file be executable temporarily. then we use git update-index --chmod=+x script.sh to say git check that the file is executable and after this it saves automatically.you can check all the permissions by ls -l. there must be rx to say that it is readable and executable.
+EXERCISE 17
+Here we use git add -patch to split the changes that are needed to be added then commit them seperately . while using we will have different options like [y : Stage this hunk (add it to staging);n : Skip this hunk (do not stage it);q : Quit (exit without adding anything);a : Stage all remaining hunks;d : Skip all remaining hunks;j : Go to the next hunk;J : Go to the next file;g : Manually enter a hunk number to review;s : Split the hunk into smaller pieces (if possible);e : Edit the hunk manually;? : Show help menu]
+
