@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+
+
 char *readl(void){
   char *line=malloc(sizeof(char)*100);
 
@@ -80,9 +82,6 @@ int count_words(char* x){
     fclose(file);
     return 0;
 }
-
-
-
 
 
 void cd(char *path) {
