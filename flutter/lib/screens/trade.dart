@@ -2,49 +2,50 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'home.dart';
+import 'captured.dart';
 import 'register.dart';
 import "commonbg.dart";
 import 'package:hive_flutter/hive_flutter.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Trade extends StatefulWidget {
+  const Trade({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Trade> createState() => _TradeState();
 }
 
-class _LoginState extends State<Login> {
+class _TradeState extends State<Trade> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void handleLogin() async {
-    final username = usernameController.text;
-    final password = passwordController.text;
+void handleTrade() async {
+  final box = Hive.box('userBox');
+  final fromUser = box.get('username');
+  final toUser = usernameController.text;
+  final pokemonName = passwordController.text;
 
-    print('Username: $username, Password: $password');
+  final url = Uri.parse('http://192.168.57.54:5000/trade');
 
-    final url = Uri.parse('http://192.168.57.54:5000/login');
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'from': fromUser,
+      'to': toUser,
+      'pokemon': pokemonName,
+    }),
+  );
 
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'username': username, 'password': password}),
-    );
-
-    if (response.statusCode ==200) {
-      print('Success: ${response.body}');
-      final userBox = Hive.box('userBox');
-      userBox.put('username', username);
-
-      Navigator.push(context,
-  MaterialPageRoute(builder: (context) => Home()),
-);
-      // Navigate to another page or show success
-    } else {
-      print('Login failed: ${response.body}');
-      // Show error
-    }
+  if (response.statusCode == 200) {
+    print('Trade successful: ${response.body}');
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Trade successful!')));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const CapturedPokemonsPage()));
+  } else {
+    print('Trade failed: ${response.body}');
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Trade failed')));
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,21 +80,14 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(12.0),
                       child: TextField(
                         controller: passwordController,
-                        decoration: const InputDecoration(hintText: 'Password'),
+                        decoration: const InputDecoration(hintText: 'pokemon name'),
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: handleLogin,
-                      child: const Text('Login'),
+                      onPressed: handleTrade,
+                      child: const Text('Trade'),
                     ),
-                    ElevatedButton(
-                      onPressed: (){
-                        Navigator.push(context,
-  MaterialPageRoute(builder: (context) => Register()),
-);
-                      },
-                      child: const Text('Register'),
-                    ),
+                    
                   ],
                 ),
               ),

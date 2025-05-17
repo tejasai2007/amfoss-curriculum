@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'pokemon_details.dart'; // <-- Add this if in separate file
 
@@ -37,6 +39,7 @@ class SearchState extends State<Search> {
   }
 
   void updateSearch(String input) async {
+
     setState(() {
       query = input;
       filteredPokemons = [];

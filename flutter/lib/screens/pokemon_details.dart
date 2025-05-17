@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:hive_flutter/hive_flutter.dart';
+
+
+
 
 class PokemonDetails extends StatelessWidget {
   final Map<String, dynamic> pokemon;
@@ -49,18 +55,37 @@ class PokemonDetails extends StatelessWidget {
             }),
             const SizedBox(height: 40),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              ),
-              onPressed: () {
-                
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Pokémon Captured!')),
-                );
-              },
-              child: const Text('Capture Pokémon', style: TextStyle(fontSize: 18)),
-            ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.teal,
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      ),
+      onPressed: () async {
+        final userBox = Hive.box('userBox');
+        String username = userBox.get('username', defaultValue: '');
+        print(username);
+        
+        final response = await http.post(
+          Uri.parse('http://192.168.57.54:5000/capture'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'username': username,
+            'pokemon': pokemon['name'].toString().toLowerCase(),
+            'details': pokemon, // Optional: send full details if needed
+          }),
+        );
+
+        if (response.statusCode == 200) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Pokémon Captured!')),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Capture failed: ${response.statusCode}')),
+          );
+        }
+      },
+      child: const Text('Capture Pokémon', style: TextStyle(fontSize: 18)),
+    )
           ],
         ),
       ),

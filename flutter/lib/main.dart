@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import '/screens/home.dart'; // Make sure this file contains your HomePage widget
 import 'screens/login.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter(); // Initialize Hive
+  await Hive.openBox('userBox'); // Open a box to store user data
+  
   runApp(const MyApp());
 }
 

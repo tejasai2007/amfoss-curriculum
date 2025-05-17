@@ -2,28 +2,26 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'home.dart';
-import 'register.dart';
 import "commonbg.dart";
-import 'package:hive_flutter/hive_flutter.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void handleLogin() async {
+  void handleRegister() async {
     final username = usernameController.text;
     final password = passwordController.text;
 
     print('Username: $username, Password: $password');
 
-    final url = Uri.parse('http://192.168.57.54:5000/login');
+    final url = Uri.parse('http://192.168.57.54:5000/register');
 
     final response = await http.post(
       url,
@@ -33,9 +31,6 @@ class _LoginState extends State<Login> {
 
     if (response.statusCode ==200) {
       print('Success: ${response.body}');
-      final userBox = Hive.box('userBox');
-      userBox.put('username', username);
-
       Navigator.push(context,
   MaterialPageRoute(builder: (context) => Home()),
 );
@@ -54,7 +49,7 @@ class _LoginState extends State<Login> {
         child: Column(
           children: [
             const Text(
-              'Login',
+              'Register',
               style: TextStyle(fontSize: 50),
             ),
             Align(
@@ -83,15 +78,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: handleLogin,
-                      child: const Text('Login'),
-                    ),
-                    ElevatedButton(
-                      onPressed: (){
-                        Navigator.push(context,
-  MaterialPageRoute(builder: (context) => Register()),
-);
-                      },
+                      onPressed: handleRegister,
                       child: const Text('Register'),
                     ),
                   ],

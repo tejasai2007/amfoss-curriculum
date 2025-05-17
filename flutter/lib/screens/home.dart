@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'commonbg.dart'; // Your background widget
 import 'pokemon_details.dart';
 import 'searchPage.dart';  // adjust path if needed
-
+import 'captured.dart';
 import 'dart:convert';
 
 class HomePage extends StatelessWidget {
@@ -107,7 +107,7 @@ return GestureDetector(
         builder: (_) => PokemonDetails(pokemon: {
           'name': name,
           'image': imageUrl,
-          'stats': pokemon['stats'] ?? [],
+          'stats': pokemon['stats']
         }),
       ),
     );
@@ -154,7 +154,7 @@ return GestureDetector(
         currentPage = const Search();  // Your Search widget imported above
         break;
       case 2:
-        currentPage = const Center(child: Text('Profile Page')); // Placeholder
+        currentPage =  CapturedPokemonsPage(); // Placeholder
         break;
       default:
         currentPage = buildHomeList();
